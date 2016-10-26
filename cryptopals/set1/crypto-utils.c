@@ -145,3 +145,14 @@ int scoreEnglishText(char *aInputStr, int aOutLen)
 
     return score;
 }
+
+/* Encrypts plaintext by performing XOR operation on a repeating-key */
+void xorStrToRepeatingKey(char *aInputStr, char *key, char *aOutStr, int aOutLen)
+{
+    int keyLen = strlen(key);
+
+    for (int i = 0; i < aOutLen; i++) {
+        char character = key[i % keyLen];
+        aOutStr[i] = aInputStr[i] ^ character;
+    }
+}
