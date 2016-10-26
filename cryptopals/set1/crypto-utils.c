@@ -1,8 +1,24 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "crypto-utils.h"
+
+/*
+ * English Letter Frequency Table
+ *
+ * Obtained October 25, 2016 from
+ * www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html
+ */
+static const int LETTER_FREQ[26] =
+{
+    812, 149, 271, 432, 1202, 230, 203, 592, 731,  10, 69, 398, 261,
+    695, 768, 182,   11, 602, 628, 910, 288, 111, 209, 17, 211,   7
+};
+
+/* Average word length / length of english alphabet */
+static const int SPACE_FREQ = 1962;
 
 
 char hexCharToByte(char aHexChar)
@@ -100,4 +116,32 @@ void xorBytes(char *aBytes1, char *aBytes2, char *aOutStr, int aOutLen)
     for (int i = 0; i < aOutLen; i++) {
         aOutStr[i] = aBytes1[i] ^ aBytes2[i];
     }
+}
+
+/* Performs XOR operation on a byte array to a single character */
+void xorByteToChar(char *aBytes, char character, char *aOutStr, int aOutLen)
+{
+    for (int i = 0; i < aOutLen; i++) {
+        aOutStr[i] = aBytes[i] ^ character;
+    }
+}
+
+/* Returns a score that uses character frequency to determine if text is English */
+int scoreEnglishText(char *aInputStr, int aOutLen)
+{
+    int score = 0;
+
+    for (int i = 0; i < aOutLen; i++) {
+        int asciiCode = tolower(aInputStr[i]) - 'a';
+
+        if (asciiCode >= 0 && asciiCode <= 25) {
+            score += LETTER_FREQ[asciiCode];
+        } else if (aInputStr[i] == 32) {
+            score += SPACE_FREQ;
+        }
+    }
+
+    score = score / aOutLen;
+
+    return score;
 }
