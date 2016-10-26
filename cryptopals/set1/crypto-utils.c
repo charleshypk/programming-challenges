@@ -60,3 +60,44 @@ char* hexStrToBytes(char* aHexStr, int* aOutLen)
 
     return outBuf;
 }
+
+char byteToHexChar(char byte)
+{
+    if (byte >= 0 && byte <= 9) {
+        return byte + 48;
+    }
+
+    if (byte >= 10 && byte <= 15) {
+        return byte + 87;
+    }
+
+    printf("Failure! Invalid byte.\n");
+    exit(1);
+}
+
+/* Converts byte array to a hex string */
+char* bytesToHexStr(char *aBytes, char *aHexStr, int aBytesLen)
+{
+    /* Need valid input */
+    if (!aBytes || !aBytesLen) {
+        return NULL;
+    }
+
+    for (int i = 0; i < aBytesLen; i++) {
+        char byte1 = (aBytes[i] >> 4) & 0x0F;
+        char byte2 = aBytes[i] & 0x0F;
+
+        aHexStr[i * 2] = byteToHexChar(byte1);
+        aHexStr[(i * 2) + 1] = byteToHexChar(byte2);
+    }
+
+    return aHexStr;
+}
+
+/* Performs XOR operation on two byte arrays of same length */
+void xorBytes(char *aBytes1, char *aBytes2, char *aOutStr, int aOutLen)
+{
+    for (int i = 0; i < aOutLen; i++) {
+        aOutStr[i] = aBytes1[i] ^ aBytes2[i];
+    }
+}
