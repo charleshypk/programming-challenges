@@ -36,4 +36,15 @@ public class Solution {
         return true;
     }
 
+    // Question 3
+    public static String replaceSpace(String str) {
+        StringBuffer strBuf = new StringBuffer();
+        for (char c : str.toCharArray()) {
+            if (c == ' ') strBuf.append("%20");
+            else strBuf.append(c);
+        }
+
+        return strBuf.toString();
+    }
+
 }
