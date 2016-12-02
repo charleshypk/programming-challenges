@@ -71,4 +71,28 @@ public class Solution {
         return numOdd == 1;
     }
 
+    // Question 5
+    public static boolean isOneDistanceAway(String str1, String str2) {
+        if (str1.length() > str2.length()) return isOneDistanceAway(str2, str1);
+
+        int strLen1 = str1.length(), strLen2 = str2.length();
+        if ((strLen2 - strLen1) > 1) return false;
+
+        int index1 = 0, index2 = 0;
+        boolean foundIntersection = false;
+        while (index1 < strLen1 && index2 < strLen2) {
+            if (str1.charAt(index1) != str2.charAt(index2)) {
+                if (foundIntersection) return false;
+                foundIntersection = true;
+
+                if (strLen1 == strLen2) index1++;  // Shift both indices if edit by replacement
+            } else {
+                index1++;
+            }
+            index2++;
+        }
+
+        return true;
+    }
+
 }
