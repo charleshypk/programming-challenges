@@ -115,4 +115,23 @@ public class Solution {
         return strLen < compressed.length() ? str : compressed.toString();
     }
 
+    // Question 7
+    public static void rotateMatrix(int[][] matrix, int size) {
+        for (int layer = 0; layer < size / 2; layer++) {
+            int first = layer;
+            int last = size - layer - 1;
+
+            for (int i = first; i < last; i++) {
+                int offset = i - first;
+                int top = matrix[first][i];
+
+                // Rotate matrix clockwise by 90 degrees
+                matrix[first][i] = matrix[last - offset][first];  // left -> top
+                matrix[last - offset][first] = matrix[last][last - offset];  // bottom -> left
+                matrix[last][last - offset] = matrix[i][last];  // right -> bottom
+                matrix[i][last] = top;  // top -> right
+            }
+        }
+    }
+
 }
