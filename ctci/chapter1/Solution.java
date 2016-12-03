@@ -95,4 +95,24 @@ public class Solution {
         return true;
     }
 
+    // Question 6
+    public static String compressString(String str) {
+        int strLen = str.length();
+        if (strLen < 3) return str;
+
+        StringBuffer compressed = new StringBuffer();
+        int numRepeat = 0;
+        for (int i = 0; i < strLen; i++) {
+            numRepeat++;
+
+            if (i == strLen - 1 || str.charAt(i) != str.charAt(i + 1)) {
+                compressed.append(str.charAt(i));
+                compressed.append(numRepeat);
+                numRepeat = 0;
+            }
+        }
+
+        return strLen < compressed.length() ? str : compressed.toString();
+    }
+
 }
