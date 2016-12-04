@@ -134,4 +134,39 @@ public class Solution {
         }
     }
 
+    // Question 8
+    public static void zeroMatrix(int[][] matrix, int m, int n) {
+        boolean[] rows = new boolean[m];
+        boolean[] columns = new boolean[n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 0) {
+                    rows[i] = true;
+                    columns[j] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            if (rows[i]) clearRow(matrix, n, i);
+        }
+
+        for (int j = 0; j < n; j++) {
+            if (columns[j]) clearColumn(matrix, m, j);
+        }
+    }
+
+    private static void clearRow(int[][] matrix, int n, int row) {
+        for (int j = 0; j < n; j++) {
+            matrix[row][j] = 0;
+        }
+    }
+
+    private static void clearColumn(int[][] matrix, int m, int col) {
+        for (int i = 0; i < m; i++) {
+            matrix[i][col] = 0;
+        }
+    }
+
 }
